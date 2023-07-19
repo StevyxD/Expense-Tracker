@@ -3,7 +3,7 @@ import "./ExpenseForm.css";
 const ExpenseForm = (props) => {
   //   ###### Multiple States ######
   const [enteredTitle, setEnteredTitle] = useState("");
-  const [enteredNumber, setEnteredNumber] = useState("");
+  const [enteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
 
   const titleChangeHandler = (event) => {
@@ -11,7 +11,7 @@ const ExpenseForm = (props) => {
   };
 
   const numberChangeHandler = (event) => {
-    setEnteredNumber(event.target.value);
+    setEnteredAmount(event.target.value);
   };
 
   const dateChangeHandler = (event) => {
@@ -62,12 +62,13 @@ const ExpenseForm = (props) => {
 
     const expenseData = {
       title: enteredTitle,
-      number: enteredNumber,
+      amount: enteredAmount,
       date: new Date(enteredDate),
     };
+    // passing data to parent element
     props.onSaveExpenseData(expenseData);
     setEnteredTitle("");
-    setEnteredNumber("");
+    setEnteredAmount("");
     setEnteredDate("");
   };
 
@@ -87,7 +88,7 @@ const ExpenseForm = (props) => {
           <label>Number</label>
           <input
             onChange={numberChangeHandler}
-            value={enteredNumber}
+            value={enteredAmount}
             type="number"
             min="0.01"
             step="0.01"
@@ -100,12 +101,16 @@ const ExpenseForm = (props) => {
             value={enteredDate}
             onChange={dateChangeHandler}
             type="date"
-            min="2022-01-01"
+            min="2019-01-01"
             max="2025-12-31"
           />
         </div>
       </div>
       <div className="new-expense__actions">
+        <button type="button" onClick={props.onCancel}>
+          Cancel
+        </button>
+
         <button type="submit">Add Expense</button>
       </div>
     </form>

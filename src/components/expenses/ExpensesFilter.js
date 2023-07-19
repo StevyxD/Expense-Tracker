@@ -22,3 +22,7 @@ const ExpensesFilter = (props) => {
 };
 
 export default ExpensesFilter;
+
+// dropDownChangeHandler is the function called when a year is 
+// selected and the value is passed to filterChangeHandler
+// which then passes the value to the parent component Expenses.js

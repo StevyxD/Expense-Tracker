@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import ExpenseFilter from "./ExpensesFilter.js";
-
-import ExpenseItem from "./ExpenseItem.js";
-import card from "../UI/Cards.js";
+import Card from "../UI/Cards";
+import ExpensesList from "./ExpensesList.js";
+import ExpensesChart from "./ExpensesChart.js";
 require("./expenses.css");
 
 const Expenses = (props) => {
@@ -10,43 +10,32 @@ const Expenses = (props) => {
 
   const filterChangeHandler = (selectedYear) => {
     setFilteredYear(selectedYear);
-    console.log(selectedYear);
   };
 
+  const filteredExpenses = props.items.filter((expense) => {
+    return expense.date.getFullYear().toString() === filteredYear;
+  });
+
   return (
-    <card className="expenses">
-      <ExpenseFilter
-        selected={filteredYear}
-        filterChange={filterChangeHandler}
-      />
-      {props.items.map((expense) => (
-        <ExpenseItem
-          title={expense.title}
-          amount={expense.amount}
-          date={expense.date}
+    <div>
+      <Card className="expenses">
+        <ExpenseFilter
+          selected={filteredYear}
+          filterChange={filterChangeHandler}
         />
-      ))}
-      ;
-      {/* <ExpenseItem
-        title={props.items[0].title}
-        amount={props.items[0].amount}
-        date={props.items[0].date}
-      ></ExpenseItem>
-      <ExpenseItem
-        title={props.items[1].title}
-        amount={props.items[1].amount}
-        date={props.items[1].date}
-      ></ExpenseItem>
-      <ExpenseItem
-        title={props.items[2].title}
-        amount={props.items[2].amount}
-        date={props.items[2].date}
-      ></ExpenseItem> */}
-    </card>
+        <ExpensesChart expenses={filteredExpenses} />
+        <ExpensesList items={filteredExpenses} />
+      </Card>
+    </div>
   );
 };
 
 export default Expenses;
 
-
 // line 22 is used to render a list of items. Its not hardcoded lioke lines 30 onwards
+
+// ExenseFilter.js is a drop down button that gives us which year we want to search
+// filterChange is the value used to get year from the drop down button
+// filtered expenses is the subArray of expenses that we want to display
+
+// The subarray is then passed to ExpensesList.js which is used to render the list
